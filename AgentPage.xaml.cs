@@ -32,6 +32,8 @@ namespace чзхноваялаба
         {
             InitializeComponent();
             var currentAgent = ivanov_GlazkiEntities.GetContext().Agent.ToList();
+            var currentSales = ivanov_GlazkiEntities.GetContext().ProductSale.ToList();
+            
 
             ServiceListView.ItemsSource = currentAgent;
             ComboType.SelectedIndex = 0;
@@ -41,62 +43,22 @@ namespace чзхноваялаба
         public void UpdateAgent()
         {
             var currentAgent = ivanov_GlazkiEntities.GetContext().Agent.ToList();
-            if (ComboType.SelectedIndex == 0)
-            {
-                currentAgent = currentAgent.Where(p => (p.AgentTypeID >= 1 && p.AgentTypeID <= 6)).ToList();
-            }
-            if (ComboType.SelectedIndex == 1)
-            {
-                currentAgent = currentAgent.Where(p => (p.AgentTypeID == 1)).ToList();
-            }
-            if (ComboType.SelectedIndex == 2)
-            {
-                currentAgent = currentAgent.Where(p => (p.AgentTypeID == 2)).ToList();
-            }
-            if (ComboType.SelectedIndex == 3)
-            {
-                currentAgent = currentAgent.Where(p => (p.AgentTypeID == 3)).ToList();
-            }
-            if (ComboType.SelectedIndex == 4)
-            {
-                currentAgent = currentAgent.Where(p => (p.AgentTypeID == 4)).ToList();
-            }
-            if (ComboType.SelectedIndex == 5)
-            {
-                currentAgent = currentAgent.Where(p => (p.AgentTypeID == 5)).ToList();
-            }
-            if (ComboType.SelectedIndex == 6)
-            {
-                currentAgent = currentAgent.Where(p => (p.AgentTypeID == 6)).ToList();
-            }
-
-
+            if (ComboType.SelectedIndex == 0) currentAgent = currentAgent.Where(p => (p.AgentTypeID >= 1 && p.AgentTypeID <= 6)).ToList();            
+            if (ComboType.SelectedIndex == 1) currentAgent = currentAgent.Where(p => (p.AgentTypeID == 1)).ToList();          
+            if (ComboType.SelectedIndex == 2) currentAgent = currentAgent.Where(p => (p.AgentTypeID == 2)).ToList();
+            if (ComboType.SelectedIndex == 3) currentAgent = currentAgent.Where(p => (p.AgentTypeID == 3)).ToList();
+            if (ComboType.SelectedIndex == 4) currentAgent = currentAgent.Where(p => (p.AgentTypeID == 4)).ToList();            
+            if (ComboType.SelectedIndex == 5) currentAgent = currentAgent.Where(p => (p.AgentTypeID == 5)).ToList();          
+            if (ComboType.SelectedIndex == 6) currentAgent = currentAgent.Where(p => (p.AgentTypeID == 6)).ToList();    
 
             if (ComboSort.SelectedIndex == 0)//все
-            {
-            }
-            if (ComboSort.SelectedIndex == 1)//наименование(А до Я) 1
-            {
-                currentAgent = currentAgent.OrderBy(p => p.Title).ToList();
-            }
-            if (ComboSort.SelectedIndex == 2)//наименование(Я до А) 2
-            {
-                currentAgent = currentAgent.OrderByDescending(p => p.Title).ToList();
-            }
-            if (ComboSort.SelectedIndex == 3)//размер скидки(по возрастанию) 3
-            {
-            }
-            if (ComboSort.SelectedIndex == 4)//размер скидки(по убыванию) 4 
-            {
-            }
-            if (ComboSort.SelectedIndex == 5)//приоритет агента(по возрастанию) 5
-            {
-                currentAgent = currentAgent.OrderBy(p => p.Priority).ToList();
-            }
-            if (ComboSort.SelectedIndex == 6) //приоритет агента(по убыванию) 6
-            {
-                currentAgent = currentAgent.OrderByDescending(p => p.Priority).ToList();
-            }                           
+            if (ComboSort.SelectedIndex == 1) currentAgent = currentAgent.OrderBy(p => p.Title).ToList();//наименование(А до Я) 1         
+            if (ComboSort.SelectedIndex == 2) currentAgent = currentAgent.OrderByDescending(p => p.Title).ToList();//наименование(Я до А) 2         
+            if (ComboSort.SelectedIndex == 3)//размер скидки(по возрастанию) 3         
+            if (ComboSort.SelectedIndex == 4)//размер скидки(по убыванию) 4          
+            if (ComboSort.SelectedIndex == 5) currentAgent = currentAgent.OrderBy(p => p.Priority).ToList();//приоритет агента(по возрастанию) 5        
+            if (ComboSort.SelectedIndex == 6) currentAgent = currentAgent.OrderByDescending(p => p.Priority).ToList();//приоритет агента(по убыванию) 6
+                             
                
             currentAgent = currentAgent.Where(p =>
             p.Title.ToLower().Contains(TBoxSearch.Text.ToLower())
@@ -129,9 +91,7 @@ namespace чзхноваялаба
         {
             UpdateAgent();
         }
-
         
-
         private void LeftDirButton_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(1, null);
@@ -220,6 +180,12 @@ namespace чзхноваялаба
         private void Grid_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             UpdateAgent();
+        }
+
+        private void PriopButton_Click(object sender, RoutedEventArgs e)
+        {
+            manager.MainFrame.Navigate(new ChangePrior());
+
         }
     }
 }
